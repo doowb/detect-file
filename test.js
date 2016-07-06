@@ -17,8 +17,8 @@ describe('detect', function() {
   });
 
   it('should not be case sensitive', function() {
-    assert(detect('readme.md'));
-    assert(detect('license'));
+    assert(detect('readme.md', {nocase: isLinux}));
+    assert(detect('license', {nocase: isLinux}));
   });
 
   it('should return filepath when a file exists', function() {
