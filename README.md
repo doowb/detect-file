@@ -18,13 +18,15 @@ var detect = require('detect-file');
 
 ## API
 
-### [.detect](index.js#L33)
+### [detect](index.js#L34)
 
 Resolve the given `filepath` if it exists.
 
 **Params**
 
 * `filepath` **{String}**: filepath to detect.
+* `options` **{Object}**: Additional options.
+* `options.nocase` **{Boolean}**: Set this to `true` force case-insensitive filename checks. This is useful on case sensitive file systems.
 * `returns` **{String}**: Returns the resolved filepath if it exists, otherwise returns `null`.
 
 **Example**
