@@ -1,28 +1,51 @@
 'use strict';
 
 require('mocha');
+var path = require('path');
 var assert = require('assert');
-var fsResolveFile = require('./');
+var detect = require('./');
+var isLinux = process.platform === 'linux';
 
-describe('fs-resolve-file', function() {
+describe('detect', function() {
   it('should export a function', function() {
-    assert.equal(typeof fsResolveFile, 'function');
+    assert.equal(typeof detect, 'function');
   });
 
-  it('should export an object', function() {
-    assert(fsResolveFile);
-    assert.equal(typeof fsResolveFile, 'object');
+  it('should be truthy a file exists', function() {
+    assert(detect('README.md'));
+    assert(detect('LICENSE'));
   });
 
-  it('should throw an error when invalid args are passed', function(cb) {
-    try {
-      fsResolveFile();
-      cb(new Error('expected an error'));
-    } catch (err) {
-      assert(err);
-      assert.equal(err.message, 'expected first argument to be a string');
-      assert.equal(err.message, 'expected callback to be a function');
-      cb();
-    }
+  it('should not be case sensitive', function() {
+    assert(detect('readme.md'));
+    assert(detect('license'));
+  });
+
+  it('should return filepath when a file exists', function() {
+    assert.equal(detect('README.md'), path.resolve('README.md'));
+    assert.equal(detect('LICENSE'), path.resolve('LICENSE'));
+  });
+
+  it('should handle case sensitive names on linux', function() {
+    assert.equal(detect('readme.md'), path.resolve(isLinux ? 'README.md' : 'readme.md'));
+    assert.equal(detect('license'), path.resolve(isLinux ? 'LICENSE' : 'license'));
+  });
+
+  it('should return resolve filepath for directories', function() {
+    assert(detect('.'));
+    assert(detect('fixtures'));
+    assert(detect(process.cwd()));
+  });
+
+  it('should return null when a file does not exist', function() {
+    assert(!detect());
+    assert(!detect(''));
+    assert(!detect('foofofo'));
+    assert(!detect('foofofo.txt'));
+  });
+
+  it('should return null when a directory does not exist', function() {
+    assert(!detect('lib/'));
+    assert(!detect('whatever/'));
   });
 });
