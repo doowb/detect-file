@@ -24,13 +24,14 @@ var exists = require('fs-exists-sync');
  * //=> null
  * ```
  *
- * @name detect
  * @param  {String} `filepath` filepath to detect.
+ * @param  {Object} `options` Additional options.
+ * @param  {Boolean} `options.nocase` Set this to `true` force case-insensitive filename checks. This is useful on case sensitive file systems.
  * @return {String} Returns the resolved filepath if it exists, otherwise returns `null`.
  * @api public
  */
 
-module.exports = function(filepath) {
+module.exports = function detect(filepath, options) {
   if (!filepath || (typeof filepath !== 'string')) {
     return null;
   }
@@ -38,10 +39,11 @@ module.exports = function(filepath) {
     return path.resolve(filepath);
   }
 
-  if (process.platform === 'win32') {
-    return null;
+  options = options || {};
+  if (options.nocase === true) {
+    return nocase(filepath);
   }
-  return detect(filepath);
+  return null;
 };
 
 /**
@@ -52,7 +54,7 @@ module.exports = function(filepath) {
  * @return {String} Returns found filepath if exists, otherwise null.
  */
 
-function detect(filepath) {
+function nocase(filepath) {
   filepath = path.resolve(filepath);
   var res = tryReaddir(filepath);
   if (res === null) {

@@ -27,8 +27,13 @@ describe('detect', function() {
   });
 
   it('should handle case sensitive names on linux', function() {
-    assert.equal(detect('readme.md'), path.resolve(isLinux ? 'README.md' : 'readme.md'));
-    assert.equal(detect('license'), path.resolve(isLinux ? 'LICENSE' : 'license'));
+    assert.equal(detect('readme.md', {nocase: true}), path.resolve(isLinux ? 'README.md' : 'readme.md'));
+    assert.equal(detect('license', {nocase: true}), path.resolve(isLinux ? 'LICENSE' : 'license'));
+
+    if (isLinux) {
+      assert(!detect('readme.md'), 'expected null when not using the sensitive flag on linux');
+      assert(!detect('license'), 'expected null when not using the sensitive flag on linux');
+    }
   });
 
   it('should return resolve filepath for directories', function() {
