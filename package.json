@@ -1,12 +1,12 @@
 {
-  "name": "fs-resolve-file",
-  "description": "Detects if a filepath exists and resolves the full filepath.",
+  "name": "detect-file",
+  "description": "Detect if a filepath exists and resolves the full filepath.",
   "version": "0.1.0",
-  "homepage": "https://github.com/doowb/fs-resolve-file",
-  "author": " ()",
-  "repository": "doowb/fs-resolve-file",
+  "homepage": "https://github.com/doowb/detect-file",
+  "author": "Brian Woodward (https://github.com/doowb)",
+  "repository": "doowb/detect-file",
   "bugs": {
-    "url": "https://github.com/doowb/fs-resolve-file/issues"
+    "url": "https://github.com/doowb/detect-file/issues"
   },
   "license": "MIT",
   "files": [
@@ -19,7 +19,9 @@
   "scripts": {
     "test": "mocha"
   },
-  "dependencies": {},
+  "dependencies": {
+    "fs-exists-sync": "^0.1.0"
+  },
   "devDependencies": {
     "gulp-format-md": "*",
     "mocha": "*"
@@ -27,10 +29,17 @@
   "keywords": [],
   "verb": {
     "layout": "default",
-    "plugins": ["gulp-format-md"],
+    "plugins": [
+      "gulp-format-md"
+    ],
     "related": {
-      "list": []
+      "list": [
+        "fs-exists-sync"
+      ]
     },
-    "reflinks": ["verb"]
+    "reflinks": [
+      "verb",
+      "verb-readme-generator"
+    ]
   }
 }
