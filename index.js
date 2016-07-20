@@ -12,7 +12,7 @@ var path = require('path');
 var exists = require('fs-exists-sync');
 
 /**
- * Resolve the given `filepath` if it exists.
+ * Detect the given `filepath` if it exists.
  *
  * ```js
  * var res = detect('package.json');
@@ -26,8 +26,8 @@ var exists = require('fs-exists-sync');
  *
  * @param  {String} `filepath` filepath to detect.
  * @param  {Object} `options` Additional options.
- * @param  {Boolean} `options.nocase` Set this to `true` force case-insensitive filename checks. This is useful on case sensitive file systems.
- * @return {String} Returns the resolved filepath if it exists, otherwise returns `null`.
+ * @param  {Boolean} `options.nocase` Set this to `true` to force case-insensitive filename checks. This is useful on case sensitive file systems.
+ * @return {String} Returns the detected filepath if it exists, otherwise returns `null`.
  * @api public
  */
 
