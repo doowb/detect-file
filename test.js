@@ -36,6 +36,15 @@ describe('detect', function() {
     }
   });
 
+  it('should handle case sensitive full filepaths on linux', function() {
+    var fp = path.resolve('fixtures/a/b/abc/def/mixedcasefile.txt');
+    assert.equal(detect(fp, {nocase: true}), path.resolve(isLinux ? 'fixtures/a/B/aBc/Def/MixedCaseFile.txt' : 'fixtures/a/b/abc/def/mixedcasefile.txt'));
+
+    if (isLinux) {
+      assert(!detect(fp), 'expected null when not using the sensitive flag on linux');
+    }
+  });
+
   it('should return resolve filepath for directories', function() {
     assert(detect('.'));
     assert(detect('fixtures'));
