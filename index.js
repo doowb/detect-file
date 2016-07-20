@@ -106,5 +106,71 @@ function tryReaddir(filepath) {
     ctx.files = fs.readdirSync(ctx.path);
     return ctx;
   } catch (err) {}
-  return null;
+  return fuzzyMatch(filepath);
+}
+
+/**
+ * Given a filepath, try to find the actual case of the directory segments
+ * by matching from the root to the file.
+ *
+ * ```js
+ * // when real path is '/Users/doowb/Mixed/cAsEd/path/SEGMENTS/FooFile.js'
+ * console.log(fuzzyMatch('/users/doowb/mixed/cased/path/segments/foofile.js'));
+ * //=> {
+ * //=>   path: '/Users/doowb/Mixed/cAsEd/path/SEGMENTS'
+ * //=>   files: ['FooFile.js']
+ * //=> }
+ * ```
+ *
+ * @param  {String} `filepath` filepath to search for
+ * @return {Object} Object containing `path` and `files` if succesful. Otherwise, null.
+ */
+
+function fuzzyMatch(filepath) {
+  var ctx = { path: filepath, files: [] };
+  var re = (process.platform === 'win32' ? /[\/\\]/ : /\/+/);
+  var segs = filepath.split(re);
+  var dirs = ['/'];
+
+  for(var i = 1; i < segs.length; i++) {
+    var seg = segs[i];
+    ctx.path = path.join.apply(path.join, dirs);
+    try {
+      ctx.files = fs.readdirSync(ctx.path);
+      for (var j = 0; j < ctx.files.length; j++) {
+        var filename = ctx.files[j];
+        if (isMatch(filename, seg)) {
+          dirs.push(filename);
+          continue;
+        }
+      }
+    } catch (err) {
+      return null;
+    }
+  }
+  return ctx;
+}
+
+/**
+ * Check if 2 strings are equal trying different cases.
+ *
+ * @param  {String} `a` String to match
+ * @param  {String} `b` String to match
+ * @return {Boolean} true if a match
+ */
+
+function isMatch(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') {
+    return false;
+  }
+
+  if (a === b) {
+    return true;
+  }
+  var upperA = a.toUpperCase();
+  if (upperA === b) {
+    return true;
+  }
+  var upperB = b.toUpperCase();
+  return a === upperB || upperA === upperB;
 }
