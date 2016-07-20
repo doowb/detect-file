@@ -127,9 +127,11 @@ function tryReaddir(filepath) {
  */
 
 function fuzzyMatch(filepath) {
-  var ctx = { path: filepath, files: [] };
+  // split regex from https://github.com/substack/node-resolve/blob/35b2b642d91e9b81e7cc26b6fd19912e18901d55/lib/node-modules-paths.js#L20
   var re = (process.platform === 'win32' ? /[\/\\]/ : /\/+/);
   var segs = filepath.split(re);
+
+  var ctx = { path: filepath, files: [] };
   var dirs = ['/'];
 
   for(var i = 1; i < segs.length; i++) {

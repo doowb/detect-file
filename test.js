@@ -56,6 +56,7 @@ describe('detect', function() {
     assert(!detect(''));
     assert(!detect('foofofo'));
     assert(!detect('foofofo.txt'));
+    assert(!detect(path.resolve('fixtures/a/b/c/missing-file.txt'), {nocase: true}))
   });
 
   it('should return null when a directory does not exist', function() {
