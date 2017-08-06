@@ -1,6 +1,6 @@
 {
   "name": "detect-file",
-  "description": "Detect if a filepath exists and resolves the full filepath.",
+  "description": "Detects if a file exists and returns the resolved filepath.",
   "version": "0.1.0",
   "homepage": "https://github.com/doowb/detect-file",
   "author": "Brian Woodward (https://github.com/doowb)",
@@ -19,16 +19,28 @@
   "scripts": {
     "test": "mocha"
   },
-  "dependencies": {
-    "fs-exists-sync": "^0.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "gulp-format-md": "*",
     "mocha": "*"
   },
-  "keywords": [],
+  "keywords": [
+    "detect",
+    "exists",
+    "file",
+    "file exists",
+    "file-path",
+    "filepath",
+    "path",
+    "resolve",
+    "resolve file",
+    "resolve filepath"
+  ],
   "verb": {
     "layout": "default",
+    "tasks": [
+      "readme"
+    ],
     "plugins": [
       "gulp-format-md"
     ],
@@ -40,6 +52,9 @@
     "reflinks": [
       "verb",
       "verb-readme-generator"
-    ]
+    ],
+    "lint": {
+      "reflinks": true
+    }
   }
 }
