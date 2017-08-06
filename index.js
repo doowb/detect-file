@@ -1,8 +1,8 @@
 /*!
- * detect-file (https://github.com/doowb/detect-file)
+ * detect-file <https://github.com/doowb/detect-file>
  *
- * Copyright (c) 2016, Brian Woodward.
- * Licensed under the MIT License.
+ * Copyright (c) 2016-2017, Brian Woodward.
+ * Released under the MIT License.
  */
 
 'use strict';
