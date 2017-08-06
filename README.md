@@ -53,11 +53,6 @@ When using the `nocase` option, this library will attempt to detect the filepath
 
 1. Try to read all files in the `filepath` using `fs.readdirSync`. If successful and `filepath` is a directory, return the `filepath`.
 2. Try to read all files in the `filepath`'s directory using `fs.readdirSync`. If successful, do case insensitive comparasions of the `filepath` to the files in `filepath`'s directory.
-3. Try to build the case-sensitive filepath starting at the root comparing filenames to directory segments.
-
-Needing to fallback to step 3 is faster than trying to use `fs.existsSync` on all possible `filepath` case permutations, but there may be a performance impact if the given `filepath` isn't found with steps 1 or 2 above.
-
-The best approach is to try to make the directory segments in the `filepath` match the actual case on the file system as closely as possible. This should reduce the need for step 3.
 
 ## About
 
